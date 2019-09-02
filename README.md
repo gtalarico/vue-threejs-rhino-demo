@@ -4,8 +4,8 @@ This is a demo project to test Rhino3dm & Compute integration with Three JS.
 I created this project just to test and learn these technologies were designed to work
 and to generate boiler plate code to use in future projects.
 
-It uses some of the [resources provided by McNeel](https://github.com/mcneel/rhino3dm/blob/master/samples/javascript/rhinologo.html),
-but also wraps the code using newer level JS syntax.
+It uses [resources provided by McNeel here](https://github.com/mcneel/rhino3dm/blob/master/samples/javascript/rhinologo.html) for the setup,
+but also wraps the code into reusable modules and uses newer level JS syntax.
 
 ### What's included
 * A minimal VueJs project setup using Vue CLI
