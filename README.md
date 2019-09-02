@@ -14,9 +14,9 @@ The application bootstrapping and [loading sequence of dependencies](https://git
 
 ### What's included
 * A minimal VueJs project setup using Vue CLI
-* My preferred setup for [loading ThreeJS into a Vue project](/master/blob/src/three) and [setting up a configurable Scene ](/master/blob/src/three/environment.js)
-* A [RhinoService module](/master/blob/src/rhinoService.js) for making handling auth, Rhino Compute calls, and converting objects to a renderable object (eg. Brep to Meshes)
-* Samples [ThreeJs encoders]((/master/blob/src/three/encoders.js)) to convert renderable Rhino Objects into ThreeJs equivalents (eg. Meshes, NurbsCurve, LineCurve, etc)
+* My preferred setup for [loading ThreeJS into a Vue project](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/three) and [setting up a configurable Scene ](/https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/three/environment.js)
+* A [RhinoService module](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/rhinoService.js) for making handling auth, Rhino Compute calls, and converting objects to a renderable object (eg. Brep to Meshes)
+* Samples [ThreeJs encoders]((https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src//three/encoders.js)) to convert renderable Rhino Objects into ThreeJs equivalents (eg. Meshes, NurbsCurve, LineCurve, etc)
 
 ![demo-screenshot](https://github.com/gtalarico/vue-threejs-rhino-demo/raw/master/rhino-viewer.gif)
 ![demo-screenshot-2](https://github.com/gtalarico/vue-threejs-rhino-demo/raw/master/rhino-viewer-2.gif)
