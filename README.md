@@ -10,7 +10,7 @@ but also build on it with more reusable modules and newer level JS syntax.
 The application bootstrapping and [loading sequence of dependencies](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/rhinoService.js#L7) in the [context of a Vue application](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/components/Scene.vue#L49) was a bit tricky but seems to be working well.
 
 [**Live Demo**](https://vue-threejs-rhino-viewer.netlify.com/)
-(Requires Rhino Compute Token)
+(Requires Rhino Compute Token, get yours [here](https://www.rhino3d.com/compute/login))
 
 ### What's included
 * A minimal VueJs project setup using Vue CLI
