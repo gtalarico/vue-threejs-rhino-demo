@@ -37,9 +37,7 @@ RhinoService.prototype.init = function () {
 RhinoService.prototype.getToken = function () {
   let token = localStorage.getItem('computeToken')
   if (token) return token
-  if (window.confirm('Please open the pop up and copy the token from the Rhino Compute Login')) {
-    window.open('https://www.rhino3d.com/compute/login')
-  }
+  window.open('https://www.rhino3d.com/compute/login')
   token = prompt('Rhino Compute Token')
   this.setToken(token)
   return token
