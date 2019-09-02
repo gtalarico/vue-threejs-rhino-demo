@@ -1,14 +1,21 @@
 import { THREE } from '@/three/three'
 import { Colors } from '@/three/colors'
+import helper from '@/three/helpers'
 
 export default function Environment (options) {
   window.addEventListener('resize', this.handleResize.bind(this), false)
 
   const defaultOptions = {
     background: Colors.offWhite,
-    sceneSize: 500,
     axis: true,
+    sceneSize: 500,
     axisSize: 100,
+    grid: {
+      show: true,
+      size: 2000,
+      cellSize: 10,
+      major: 5,
+    }
   }
   const envOptions = Object.assign(defaultOptions, options)
 
@@ -53,9 +60,14 @@ export default function Environment (options) {
     this.scene.add(new THREE.AxesHelper(envOptions.axisSize))
   }
 
+  if (envOptions.grid.show) {
+    const grid = helper.makeGrid(envOptions.grid.size, envOptions.grid.cellSize, envOptions.grid.major, Colors.darkGray, Colors.lightGray)
+    this.scene.add(grid)
+  }
+
   // Setup flag native scene objects so we can keep them when wiping scene
   this.scene.children.map(o => {
-    o.userData.isEnvironment = true
+    o.userData.isEnvironmentObject = true
   })
   this.renderForever()
 }
@@ -64,6 +76,10 @@ Environment.prototype.renderForever = function () {
   requestAnimationFrame(this.renderForever.bind(this))
   this.controls.update()
   this.renderer.render(this.scene, this.camera)
+}
+
+Environment.prototype.clear = function () {
+  this.scene.children = this.scene.children.filter(o => o.userData.isEnvironmentObject)
 }
 
 Environment.prototype.handleResize = function () {

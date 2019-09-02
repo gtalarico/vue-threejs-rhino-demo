@@ -37,6 +37,9 @@ RhinoService.prototype.init = function () {
 RhinoService.prototype.getToken = function () {
   let token = localStorage.getItem('computeToken')
   if (token) return token
+  if (window.confirm('Please open the pop up and copy the token from the Rhino Compute Login')) {
+    window.open('https://www.rhino3d.com/compute/login')
+  }
   token = prompt('Rhino Compute Token')
   this.setToken(token)
   return token
@@ -47,7 +50,12 @@ RhinoService.prototype.setToken = function (token) {
 }
 
 RhinoService.prototype.loadFileFromUrl = async function (url) {
-  let response = await axios.get(url, { responseType: 'arraybuffer' })
+  let response
+  try {
+    response = await axios.get(url, { responseType: 'arraybuffer' })
+  } catch (e) {
+    throw Error('could not fetch url')
+  }
   const longInt8View = new Uint8Array(response.data)
   const file = Rhino3dm.File3dm.fromByteArray(longInt8View)
   return new RhinoDoc(file)
@@ -71,7 +79,18 @@ function RhinoObject (modelObject) {
 RhinoObject.prototype.toRenderable = async function () {
   const rhinoObjecTypeName = this.geometry.constructor.name
   const converter = converters[rhinoObjecTypeName]
-  let rhinoOBjects = await converter(this.geometry)
+  if (!converter) {
+    console.warn(`no renderable obj for ${rhinoObjecTypeName}`)
+    return null
+  }
+  let rhinoOBjects
+  try {
+    rhinoOBjects = await converter(this.geometry)
+  } catch (e) {
+    console.warn('Rhino Compute request failed')
+    localStorage.removeItem('computeToken')
+    throw Error('Rhino Compute request failed')
+  }
   return rhinoOBjects
 }
 

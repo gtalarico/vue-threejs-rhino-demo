@@ -11,12 +11,21 @@ export default function (rhinoObject) {
 }
 
 const materials = {
+  line: new THREE.LineBasicMaterial({ color: 0x000000 }),
   wire: new THREE.LineBasicMaterial({ color: 0x000000 }),
   mesh: new THREE.MeshPhongMaterial({ color: 0xffffff }),
   // mesh: new THREE.MeshBasicMaterial({color: 0xe0e0e0}),
 }
 
 const encoders = {
+  'LineCurve': (rhinoLineCurve) => {
+    const pt1 = rhinoLineCurve.pointAtStart
+    const pt2 = rhinoLineCurve.pointAtEnd
+    const geometry = new THREE.Geometry()
+    geometry.vertices.push(new THREE.Vector3(...pt1))
+    geometry.vertices.push(new THREE.Vector3(...pt2))
+    return new THREE.Line(geometry, materials.line)
+  },
   'NurbsCurve': (rhinoCurve) => {
     const geometry = new THREE.Geometry()
     const domain = rhinoCurve.domain
