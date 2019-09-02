@@ -19,6 +19,7 @@ The application bootstrapping and [loading sequence of dependencies](https://git
 * Samples [ThreeJs encoders]((/master/blob/src/three/encoders.js)) to convert renderable Rhino Objects into ThreeJs equivalents (eg. Meshes, NurbsCurve, LineCurve, etc)
 
 ![demo-screenshot](https://github.com/gtalarico/vue-threejs-rhino-demo/raw/master/rhino-viewer.gif)
+![demo-screenshot-2](https://github.com/gtalarico/vue-threejs-rhino-demo/raw/master/rhino-viewer-2.gif)
 
 
 ### Contributing
