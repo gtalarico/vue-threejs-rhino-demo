@@ -5,7 +5,7 @@ I created this project to test and learn how these new technologies were designe
 and to generate boiler plate code for use in future projects.
 
 It uses [resources and samples provided by McNeel here](https://github.com/mcneel/rhino3dm/blob/master/samples/javascript/rhinologo.html) for the basic setup,
-but also build on it with more reusable modules and newer level JS syntax.
+but also build on it with more reusable modules and new JS syntax.
 
 The application bootstrapping and [loading sequence of dependencies](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/rhinoService.js#L7) in the [context of a Vue application](https://github.com/gtalarico/vue-threejs-rhino-demo/blob/master/src/components/Scene.vue#L49) was a bit tricky but seems to be working well.
 
