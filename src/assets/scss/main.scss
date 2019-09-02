@@ -1,4 +1,18 @@
+@import 'loader.scss';
+
 body {
     margin: 0;
     padding: 0;
 }
+
+.dark {
+    color: #aaa;
+    input {
+        color: #aaa
+    }
+}
+
+$color-primary: #f00b42;
+
+
+@import '~milligram-scss';

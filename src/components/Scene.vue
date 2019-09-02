@@ -4,20 +4,27 @@
 
 <script>
 import Environment from '@/three/environment'
-import helper from '@/three/helpers'
 import { Colors } from '@/three/colors'
+import threeEncoder from '@/three/encoders'
 import RhinoService from '@/rhinoService'
-import threeEncoder from '@/encoders'
-// import { THREE } from '@/three/three'
 
 export default {
   name: 'Scene',
+  props: [
+    'fileUrl'
+  ],
   data () {
     return {
       rhinoService: null
     }
   },
+  watch: {
+    fileUrl (fileUrl) {
+      this.loadModel(fileUrl)
+    }
+  },
   created () {
+    this.$emit('isLoading', true)
     document.addEventListener('mousedown', this.handleObjectClick, false)
   },
   destroyed () {
@@ -25,24 +32,55 @@ export default {
   },
   async mounted () {
     const sceneSize = 500
-    let options = { grid: false, background: Colors.white, sceneSize: sceneSize }
+    let options = {
+      background: Colors.white,
+      sceneSize: sceneSize,
+      grid: {
+        show: true,
+        size: 2000,
+        cellSize: 10,
+        major: 5,
+      }
+    }
     this.environment = new Environment(options)
-    const grid = helper.makeGrid(2000, 10, 5, Colors.darkGray, Colors.lightGray)
-    this.environment.scene.add(grid)
 
+    this.$emit('emitMessage', 'Loading Rhino Depedencies')
     this.rhinoService = new RhinoService()
     await this.rhinoService.init()
-    this.loadModel()
+    this.$emit('isLoading', false)
   },
   methods: {
-    async loadModel () {
-      let doc = await this.rhinoService.loadFileFromUrl('https://files.mcneel.com/rhino3dm/models/RhinoLogo.3dm')
-      // let model = await this.rhinoService.loadFileFromUrl('https://files.mcneel.com/rhino3dm/models/Cutters.3dm')
-      doc.objects.forEach(async o => {
-        let rhinoObjects = await o.toRenderable()
-        let threeObjects = rhinoObjects.map(o => threeEncoder(o)).filter(o => o !== null)
+    async loadModel (fileUrl) {
+      this.environment.clear()
+      this.$emit('isLoading', true)
+      this.$emit('emitMessage', 'Loading Model')
+      let doc
+      try {
+        doc = await this.rhinoService.loadFileFromUrl(fileUrl)
+      } catch (e) {
+        this.$emit('emitMessage', 'Request Failed')
+        setTimeout(() => { this.$emit('isLoading', false) }, 1000)
+        return
+      }
+
+      this.$emit('emitMessage', 'Encoding Objects')
+      for (let obj of doc.objects) {
+        let rhinoObjects
+        try {
+          rhinoObjects = await obj.toRenderable()
+        } catch (e) {
+          this.$emit('emitMessage', 'Compute Request Failed')
+          setTimeout(() => { this.$emit('isLoading', false) }, 1000)
+          return
+        }
+
+        let threeObjects = rhinoObjects
+          .filter(o => o !== null) // Filter objects with no renderable rep
+          .map(o => threeEncoder(o))
+          .filter(o => o !== null) // Filter objects with no three js encoder
         this.environment.scene.add(...threeObjects)
-      })
+      }
+      this.$emit('isLoading', false)
     },
     handleObjectClick () {
     //   let intersects = this.environment.raycaster
@@ -55,13 +93,5 @@ export default {
 </script>
 
 <style scoped>
-
-#three-container {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-}
 
 </style>
