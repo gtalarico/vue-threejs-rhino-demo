@@ -11,7 +11,7 @@
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
     "milligram-scss": "^1.3.0",
-    "three": "^0.108.0",
+    "three": "^0.125.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
